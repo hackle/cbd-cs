@@ -9,7 +9,7 @@ public class MatchResultTests
     [Test]
     public void AllScenarios(int myScore, int opponentScore, Result expected)
     {
-        var actual = MatchResult.matchResultNoAssign(myScore, opponentScore);
+        var actual = MatchResult.Calculate2(myScore, opponentScore);
 
         Assert.That(actual, Is.EqualTo(expected));
     }

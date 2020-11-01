@@ -1,3 +1,5 @@
+using System.Linq;
+
 public static class Discounted
 {
     /*
@@ -6,34 +8,21 @@ public static class Discounted
     */
     public static decimal Calculate(bool isBirthday, bool isStudent, bool isRegular) 
     {
-        if (isBirthday && isStudent && isRegular) {
-            return 0.45m;
-        }
+        var combos = new []
+        {
+            new { isBirthday = true, isStudent = true, isRegular = true, final = 0.45m },
+            new { isBirthday = true, isStudent = true, isRegular = false, final = 0.65m },
+            new { isBirthday = true, isStudent = false, isRegular = true, final = 0.5m },
+            new { isBirthday = true, isStudent = false, isRegular = false, final = 0.7m },
+            new { isBirthday = false, isStudent = true, isRegular = true, final = 0.55m },
+            new { isBirthday = false, isStudent = true, isRegular = false, final = 0.8m },
+            new { isBirthday = false, isStudent = false, isRegular = true, final = 0.9m },
+            new { isBirthday = false, isStudent = false, isRegular = false, final = 1m },
+        };
 
-        if (isBirthday && isStudent) {
-            return 0.65m;
-        }
-
-        if (isBirthday && isRegular) {
-            return 0.5m;
-        }
-
-        if (isStudent && isRegular) {
-            return 0.55m;
-        }
-
-        if (isBirthday) {
-            return 0.7m;
-        }
-
-        if (isStudent) {
-            return 0.8m;
-        }
-
-        if (isRegular) {
-            return 0.9m;
-        }
-
-        return 1;
+        return combos.First(c => c.isBirthday == isBirthday && 
+                                c.isStudent == isStudent &&
+                                c.isRegular == isRegular
+                            ).final;
     }
 }
