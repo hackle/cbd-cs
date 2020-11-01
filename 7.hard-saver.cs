@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public static class HardSaver
 {
@@ -10,6 +11,8 @@ public static class HardSaver
     */
     public static decimal AllWithInterest(IEnumerable<decimal> annualIncome, decimal interestRate) 
     {
-        return 0;
+        return annualIncome
+                .Reverse()
+                .Aggregate(0m, (tot, cur) => tot * (1 + interestRate) + cur);
     }
 }
