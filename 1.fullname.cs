@@ -1,3 +1,5 @@
+using System.Linq;
+
 public static class FullName 
 {
     /*
@@ -36,6 +38,10 @@ public static class FullName
         string middlename, 
         string lastname) 
     {
-        return string.Empty;
+        return string.Join(
+            " ",
+            new [] { firstname, middlename, lastname }
+                .Where(n => string.IsNullOrWhiteSpace(n))
+        );
     }
 }

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 public enum Result { Win, Loss, Tie }
 public static class MatchResult 
 {
@@ -50,7 +53,15 @@ public static class MatchResult
     */
     public static Result Calculate1(int myScore, int opponentScore) 
     {
-        return Result.Tie;
+        var possibilities = new 
+        {
+            Win = myScore > opponentScore,
+            Loss = myScore < opponentScore,
+        };
+
+        return possibilities.Win ? Result.Win :
+                possibilities.Loss ? Result.Loss :
+                Result.Tie;
     }
 
     /*
@@ -60,6 +71,11 @@ public static class MatchResult
     */
     public static Result Calculate2(int myScore, int opponentScore) 
     {
-        return Result.Tie;
+        return new Result?[] 
+        {
+            myScore > opponentScore ? (Result?) Result.Win : null,
+            myScore < opponentScore ? (Result?) Result.Loss : null,
+            Result.Tie,
+        }.First(r => r != null).Value;
     }
 }

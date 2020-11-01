@@ -1,13 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public static class Footy
 {
     /*
         See spec file for problem statement
-        Maybe there is a useful function from lodash here https://lodash.com/docs/4.17.15
+        Maybe there is a useful function from Linq
     */
     public static IEnumerable<string> Pass(IEnumerable<string> players)
     {
-        return new string[]{};
+        return players.Zip(
+            players.Skip(1).Concat(players.Take(1)),
+            (p1, p2) => $"{p1} passes the ball to {p2}"
+        );
     }
 }

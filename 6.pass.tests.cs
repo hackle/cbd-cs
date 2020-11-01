@@ -2,6 +2,7 @@ using NUnit.Framework;
 
 public class FootyTests
 {
+    [Test]
     public void PassesInACircle()
     {
         var actual = Footy.Pass(new [] { "Adam", "Bela", "Charles", "Diane" });
