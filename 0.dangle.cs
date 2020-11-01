@@ -33,6 +33,14 @@ public static class MatchResult
     */
     public static Result matchResultNoAssign(int myScore, int opponentScore) 
     {
+        if (myScore > opponentScore) {
+            return Result.Win;
+        } 
+        
+        if (myScore < opponentScore) {
+            return Result.Loss;
+        } 
+        
         return Result.Tie;
     }
 
