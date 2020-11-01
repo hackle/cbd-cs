@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public static class InflatedIncome
 {
@@ -10,6 +11,8 @@ public static class InflatedIncome
     */
     public static decimal Calculate(IEnumerable<decimal> annualIncome, decimal inflationRate) 
     {
-        return 0;
+        return annualIncome
+                .Reverse()
+                .Aggregate(0m, (tot, cur) => tot * (1 + inflationRate) + cur);
     }
 }

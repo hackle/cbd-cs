@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Linq;
 using Purchase = System.Collections.Immutable.ImmutableDictionary<Role, Decision>;
 
 public enum Role { Teamlead, Manager, GM, CEO }
@@ -24,7 +25,7 @@ public class DecisionMaker
     // check all roles approve of the purchase
     bool ApprovedBy(params Role[] roles) 
     {
-        return true;
+        return roles.All(r => this.purchase.ContainsKey(r) && purchase[r] == Decision.Approved);
     }
 
     public Purchase Decide() 
@@ -53,19 +54,16 @@ public class DecisionMaker
 
 // a chain of processors taking turn at one object
 public static class Pipeline 
-{    
-    /*
-        This is not bad but error prone, try to use "Aggregate" to make it more solid 
-    */
+{
     public static Purchase Run(Purchase purchase, Func<Decision> decider)
     {
-        var decidedByTeamLead = new DecisionMaker(purchase, Role.Teamlead, decider).Decide();
-        var decidedByManager = new DecisionMaker(decidedByTeamLead, Role.Manager, decider).Decide();
-        var decidedByGM = new DecisionMaker(decidedByManager, Role.GM, decider).Decide();
-        var decidedByCEO = new DecisionMaker(decidedByGM, Role.CEO, decider).Decide();
-
-        return decidedByCEO;
+        return new [] {
+            Role.Teamlead,
+            Role.Manager,
+            Role.GM,
+            Role.CEO
+        }.Aggregate(purchase, (pur, role) => new DecisionMaker(pur, role, decider).Decide());
     }
-    public static Purchase initialApprovals = ImmutableDictionary.Create<Role, Decision>();
 
+    public static Purchase initialApprovals = ImmutableDictionary.Create<Role, Decision>();
 }
