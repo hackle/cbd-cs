@@ -31,8 +31,16 @@ public static class MatchResult
         otherwise, result is "Tie"
         ...
     */
-    public static Result matchResultNoAssign(int myScore, int opponentScore) 
+    public static Result CalculateNoAssign(int myScore, int opponentScore) 
     {
+        if (myScore > opponentScore) {
+            return Result.Win;
+        } 
+        
+        if (myScore < opponentScore) {
+            return Result.Loss;
+        } 
+        
         return Result.Tie;
     }
 
@@ -40,7 +48,7 @@ public static class MatchResult
         Given my score and opponent score, 
         the result must be one of the possibilities: a win, a loss or a tie
     */
-    public static Result matchResult1(int myScore, int opponentScore) 
+    public static Result Calculate1(int myScore, int opponentScore) 
     {
         return Result.Tie;
     }
@@ -50,7 +58,7 @@ public static class MatchResult
         and the methods Win, Loss and Tie are calculated,
         the result can be found by trying all methods until success
     */
-    public static Result matchResult2(int myScore, int opponentScore) 
+    public static Result Calculate2(int myScore, int opponentScore) 
     {
         return Result.Tie;
     }
